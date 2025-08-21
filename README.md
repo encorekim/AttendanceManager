@@ -1,12 +1,13 @@
 ### Checklists
-|Requirements|Status|
-|-------|-------|
-|D1|O|
-|D2|X|
-|D3|X|
-|D4|X|
-|D5|O|
+|Requirements|Status|Description|
+|-------|-------|-------|
+|D1|O|Renaming all variables and functions. Splitting functions by SRP|
+|D2|O|Total 8 unit tests|
+|D3|O|High scalability with abstraction class|
+|D4|O|Grades with factory pattern|
+|D5|O|Coverage 100%|
 
 
 ### Coverage
 ![coverage](https://raw.githubusercontent.com/encorekim/AttendanceManager1/master/code_coverage.png)
+
