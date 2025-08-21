@@ -5,7 +5,11 @@
 #include <map>
 #include <algorithm>
 
-using namespace std;
+using std::string;
+using std::map;
+using std::string;
+using std::cout;
+using std::ifstream;
 
 map<string, int> nameToId;
 int idCount = 0;
