@@ -33,3 +33,11 @@ TEST_F(AttendanceFixture, GradeTestSilver) {
 TEST_F(AttendanceFixture, GradeTestGold) {
 	EXPECT_EQ(team.getPlayer("Charlie").getGrade(), 2);
 }
+
+TEST_F(AttendanceFixture, RemovedPlayer) {
+	EXPECT_EQ(team.getPlayer("Zane").isRemoved(), true);
+}
+
+TEST_F(AttendanceFixture, NotRemovedPlayer) {
+	EXPECT_EQ(team.getPlayer("Xena").isRemoved(), false);
+}
