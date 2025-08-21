@@ -1,5 +1,5 @@
 #include "gmock/gmock.h"
-#include "attendance.h"
+#include "team.h"
 
 class AttendanceFixture : public ::testing::Test {
 public:
@@ -23,15 +23,15 @@ TEST_F(AttendanceFixture, PointTest3) {
 }
 
 TEST_F(AttendanceFixture, GradeTestNormal) {
-	EXPECT_EQ(team.getPlayer("Ian").getGrade(), 0);
+	EXPECT_EQ(team.getPlayer("Ian").getGrade(), "NORMAL");
 }
 
 TEST_F(AttendanceFixture, GradeTestSilver) {
-	EXPECT_EQ(team.getPlayer("Will").getGrade(), 1);
+	EXPECT_EQ(team.getPlayer("Will").getGrade(), "SILVER");
 }
 
 TEST_F(AttendanceFixture, GradeTestGold) {
-	EXPECT_EQ(team.getPlayer("Charlie").getGrade(), 2);
+	EXPECT_EQ(team.getPlayer("Charlie").getGrade(), "GOLD");
 }
 
 TEST_F(AttendanceFixture, RemovedPlayer) {

@@ -1,5 +1,4 @@
 #include "gmock/gmock.h"
-#include "attendance.h"
 
 int main() {
 	::testing::InitGoogleTest();

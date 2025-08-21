@@ -126,17 +126,19 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="attendance.cpp">
+    <ClCompile Include="grade.h" />
+    <ClCompile Include="team.cpp">
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'"> %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
-    <ClCompile Include="attendance_test.cpp" />
+    <ClCompile Include="team_test.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="attendance_weekday_500.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="attendance.h" />
+    <ClInclude Include="player.h" />
+    <ClInclude Include="team.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

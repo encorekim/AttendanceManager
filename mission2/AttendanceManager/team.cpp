@@ -4,7 +4,8 @@
 #include <unordered_map>
 #include <algorithm>
 #include "gmock/gmock.h"
-#include "attendance.h"
+#include "team.h"
+#include "player.h"
 
 using std::string;
 using std::unordered_map;
@@ -28,6 +29,7 @@ void Team::giveAttendancePoints(const string& playerName, const string& attended
 	else {
 		members[playerName].addPoints(1);
 	}
+	members[playerName].setGradesByPoints();
 }
 
 void Team::giveBonusPoints() {
@@ -39,22 +41,7 @@ void Team::giveBonusPoints() {
 		if (player.getWeekendAttendanceCount() > 9) {
 			player.addPoints(10);
 		}
-	}
-}
-
-void Team::assignPlayerGrades() {
-	for (auto& pair : members) {
-		Player& player = pair.second;
-		if (player.getPoints() >= 50) {
-			player.setGrades(2);
-		}
-		else if (player.getPoints() >= 30) {
-			player.setGrades(1);
-		}
-		else {
-			player.setGrades(0);
-		}
-
+		player.setGradesByPoints();
 	}
 }
 
@@ -64,23 +51,15 @@ void Team::showPlayerScoreAndGrades() {
 		std::cout << "NAME : " << player.getName() << ", ";
 		std::cout << "POINT : " << player.getPoints() << ", ";
 		std::cout << "GRADE : ";
+		std::cout << player.getGrade() << "\n";
 
-		if (player.getGrade() == 2) {
-			std::cout << "GOLD" << "\n";
-		}
-		else if (player.getGrade() == 1) {
-			std::cout << "SILVER" << "\n";
-		}
-		else {
-			std::cout << "NORMAL" << "\n";
-		}
 	}
 }
 
 void Team::removeLazyPlayers() {
 	for (auto& pair : members) {
 		Player& player = pair.second;
-		if (player.getGrade() != 1 && player.getGrade() != 2 && player.getWendnesdayAttendanceCount() == 0 && player.getWeekendAttendanceCount() == 0) {
+		if (player.getGrade() != "SILVER" && player.getGrade() != "GOLD" && player.getWendnesdayAttendanceCount() == 0 && player.getWeekendAttendanceCount() == 0) {
 			player.remove();
 		}
 	}
@@ -109,8 +88,6 @@ void Team::processAllRecords() {
 	}
 
 	giveBonusPoints();
-
-	assignPlayerGrades();
 
 	showPlayerScoreAndGrades();
 

@@ -1,25 +1,24 @@
 #pragma once
 
 #include <string>
-#include <unordered_map>
-
-enum Grade {
-	Normal = 0,
-	Silver = 1,
-	Gold = 2
-};
+#include <memory>
+#include "grade.h"
 
 class Player {
 public:
 	Player() = default;
 	Player(const std::string& name) : name(name) {}
 	~Player() = default;
+	Player(Player&&) noexcept = default;
+	Player& operator=(Player&&) noexcept = default;
+	Player(const Player&) = delete;
+	Player& operator=(const Player&) = delete;
 
 	std::string getName() { return name; }
 	void addPoints(int gainedPoints) { points += gainedPoints; }
 	int getPoints() { return points; }
-	void setGrades(int newGrade) { grade = newGrade; }
-	int getGrade() { return grade; }
+	void setGradesByPoints() { grade = GradeFactory::create(points); }
+	std::string getGrade() { return grade->getName(); }
 	void attendOnWednesday() { wendesnesdayAttendanceCount++; }
 	void attendOnWeekend() { weekendAttendanceCount++; }
 	int getWendnesdayAttendanceCount() {
@@ -34,25 +33,8 @@ public:
 private:
 	std::string name{ "" };
 	int points{ 0 };
-	int grade{ 0 };
+	std::unique_ptr<Grade> grade = nullptr;
 	int wendesnesdayAttendanceCount{ 0 };
 	int weekendAttendanceCount{ 0 };
 	bool removed = false;
-};
-
-class Team {
-public:
-	Team() = default;
-	~Team() = default;
-	void processAllRecords();
-	Player& getPlayer(const std::string& playerName) { return members[playerName]; }
-private:
-	std::unordered_map<std::string, Player> members;
-	void assignPlayer(const std::string& playerName);
-	void giveAttendancePoints(const std::string& playerName, const std::string& attendedWeekday);
-	void giveBonusPoints();
-	void assignPlayerGrades();
-	void showPlayerScoreAndGrades();
-	void showRemovedPlayers();
-	void removeLazyPlayers();
 };
