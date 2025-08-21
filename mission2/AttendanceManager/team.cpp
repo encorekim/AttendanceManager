@@ -86,12 +86,6 @@ void Team::processAllRecords() {
 		assignPlayer(playerName);
 		giveAttendancePoints(playerName, attendedWeekday);
 	}
-
 	giveBonusPoints();
-
-	showPlayerScoreAndGrades();
-
 	removeLazyPlayers();
-
-	showRemovedPlayers();
 }
