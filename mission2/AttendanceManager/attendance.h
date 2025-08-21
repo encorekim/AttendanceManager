@@ -28,6 +28,8 @@ public:
 	int getWeekendAttendanceCount() {
 		return weekendAttendanceCount;
 	}
+	void remove() { removed = true; }
+	bool isRemoved() { return removed; }
 
 private:
 	std::string name{ "" };
@@ -35,6 +37,7 @@ private:
 	int grade{ 0 };
 	int wendesnesdayAttendanceCount{ 0 };
 	int weekendAttendanceCount{ 0 };
+	bool removed = false;
 };
 
 class Team {
@@ -51,4 +54,5 @@ private:
 	void assignPlayerGrades();
 	void showPlayerScoreAndGrades();
 	void showRemovedPlayers();
+	void removeLazyPlayers();
 };

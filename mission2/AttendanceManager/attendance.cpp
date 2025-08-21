@@ -58,7 +58,7 @@ void Team::assignPlayerGrades() {
 	}
 }
 
-void Team::showPlayerScoreAndGrades(){
+void Team::showPlayerScoreAndGrades() {
 	for (auto& pair : members) {
 		Player& player = pair.second;
 		std::cout << "NAME : " << player.getName() << ", ";
@@ -77,6 +77,15 @@ void Team::showPlayerScoreAndGrades(){
 	}
 }
 
+void Team::removeLazyPlayers() {
+	for (auto& pair : members) {
+		Player& player = pair.second;
+		if (player.getGrade() != 1 && player.getGrade() != 2 && player.getWendnesdayAttendanceCount() == 0 && player.getWeekendAttendanceCount() == 0) {
+			player.remove();
+		}
+	}
+}
+
 void Team::showRemovedPlayers()
 {
 	std::cout << "\n";
@@ -84,7 +93,7 @@ void Team::showRemovedPlayers()
 	std::cout << "==============\n";
 	for (auto& pair : members) {
 		Player& player = pair.second;
-		if (player.getGrade() != 1 && player.getGrade() != 2 && player.getWendnesdayAttendanceCount() == 0 && player.getWeekendAttendanceCount() == 0) {
+		if (player.isRemoved()) {
 			std::cout << player.getName() << "\n";
 		}
 	}
@@ -105,10 +114,7 @@ void Team::processAllRecords() {
 
 	showPlayerScoreAndGrades();
 
-	showRemovedPlayers();
-}
+	removeLazyPlayers();
 
-int main() {
-	::testing::InitGoogleTest();
-	return RUN_ALL_TESTS();
+	showRemovedPlayers();
 }
