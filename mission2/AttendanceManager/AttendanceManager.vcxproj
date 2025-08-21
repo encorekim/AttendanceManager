@@ -129,6 +129,7 @@
     <ClCompile Include="attendance.cpp">
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'"> %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
+    <ClCompile Include="attendance_test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="attendance_weekday_500.txt" />
