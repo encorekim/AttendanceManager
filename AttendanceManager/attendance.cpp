@@ -5,6 +5,7 @@
 #include <map>
 #include <algorithm>
 #include "gmock/gmock.h"
+#include "attendance.h"
 
 using std::string;
 using std::map;
@@ -20,16 +21,16 @@ string playerNames[100];
 int wednesdayAttendenceCount[100];
 int weekendAttendenceCount[100];
 
-void processRecord(string playerName, string attendedWeekday) {
-	if (playerName == "Daisy") {
-		int debug = 1;
-	}
+int getOrAssignPlayerId(std::string& playerName)
+{
 	if (nameToId.count(playerName) == 0) {
 		nameToId.insert({ playerName, ++idCount });
 		playerNames[idCount] = playerName;
 	}
-	int playerId = nameToId[playerName];
+	return nameToId[playerName];
+}
 
+void processRecord(int playerId, string attendedWeekday) {
 	if (attendedWeekday == "wednesday") {
 		playerPoints[playerId] += 3;
 		wednesdayAttendenceCount[playerId] += 1;
@@ -43,23 +44,22 @@ void processRecord(string playerName, string attendedWeekday) {
 	}
 }
 
-void processAllRecords() {
-	ifstream fin{ "attendance_weekday_500.txt" }; //500개 데이터 입력
-	for (int i = 0; i < 500; i++) {
-		string playerName, attendedWeekday;
-		fin >> playerName >> attendedWeekday;
-		processRecord(playerName, attendedWeekday);
-	}
-
+void grantBonusPoints()
+{
 	for (int id = 1; id <= idCount; id++) {
 		if (wednesdayAttendenceCount[id] > 9) {
 			playerPoints[id] += 10;
 		}
-		
+
 		if (weekendAttendenceCount[id] > 9) {
 			playerPoints[id] += 10;
 		}
+	}
+}
 
+void assignPlayerGrades()
+{
+	for (int id = 1; id <= idCount; id++) {
 		if (playerPoints[id] >= 50) {
 			playerGrades[id] = 1;
 		}
@@ -70,6 +70,13 @@ void processAllRecords() {
 			playerGrades[id] = 0;
 		}
 
+	}
+}
+
+void showPlayerScoreAndGrades()
+{
+
+	for (int id = 1; id <= idCount; id++) {
 		std::cout << "NAME : " << playerNames[id] << ", ";
 		std::cout << "POINT : " << playerPoints[id] << ", ";
 		std::cout << "GRADE : ";
@@ -84,7 +91,10 @@ void processAllRecords() {
 			std::cout << "NORMAL" << "\n";
 		}
 	}
+}
 
+void showRemovedPlayers()
+{
 	std::cout << "\n";
 	std::cout << "Removed player\n";
 	std::cout << "==============\n";
@@ -94,6 +104,24 @@ void processAllRecords() {
 			std::cout << playerNames[i] << "\n";
 		}
 	}
+}
+
+void processAllRecords() {
+	ifstream fin{ "attendance_weekday_500.txt" };
+	for (int i = 0; i < 500; i++) {
+		string playerName, attendedWeekday;
+		fin >> playerName >> attendedWeekday;
+		auto playerId = getOrAssignPlayerId(playerName);
+		processRecord(playerId, attendedWeekday);
+	}
+
+	grantBonusPoints();
+
+	assignPlayerGrades();
+
+	showPlayerScoreAndGrades();
+
+	showRemovedPlayers();
 }
 
 TEST(AttendenaceTest, PointTest1) {
