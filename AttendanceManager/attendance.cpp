@@ -19,23 +19,14 @@ int wednesdayAttendenceCount[100];
 int weekendAttendenceCount[100];
 
 void processRecord(string playerName, string attendedWeekday) {
-	//ID 부여
-	if (nameToId.count(playerName) == 0) {
-		nameToId.insert({ playerName, ++idCount });
-
-		if (playerName == "Daisy") {
-			int debug = 1;
-		}
-
-		playerNames[idCount] = playerName;
-	}
-	int playerId = nameToId[playerName];
-
-	//디버깅용
 	if (playerName == "Daisy") {
 		int debug = 1;
 	}
-
+	if (nameToId.count(playerName) == 0) {
+		nameToId.insert({ playerName, ++idCount });
+		playerNames[idCount] = playerName;
+	}
+	int playerId = nameToId[playerName];
 
 	int point = 0;
 	int weekdayIndex = 0;

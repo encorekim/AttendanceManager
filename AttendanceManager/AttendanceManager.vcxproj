@@ -125,6 +125,15 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="attendance.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="attendance_weekday_500.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="attendance.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\gmock.1.11.0\build\native\gmock.targets" Condition="Exists('..\packages\gmock.1.11.0\build\native\gmock.targets')" />
