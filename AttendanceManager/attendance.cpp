@@ -15,10 +15,9 @@ using std::ifstream;
 map<string, int> nameToId;
 int idCount = 0;
 
-int attendanceRecord[100][100]; // [id][weekday]
-int playerPoints[100]; // [id]
-int playerGrades[100]; // [id]
-string playerNames[100]; // [id]
+int playerPoints[100];
+int playerGrades[100];
+string playerNames[100];
 
 int wednesdayAttendenceCount[100];
 int weekendAttendenceCount[100];
@@ -33,43 +32,17 @@ void processRecord(string playerName, string attendedWeekday) {
 	}
 	int playerId = nameToId[playerName];
 
-	int point = 0;
-	int weekdayIndex = 0;
-	if (attendedWeekday == "monday") {
-		weekdayIndex = 0;
-		point++;
-	}
-	if (attendedWeekday == "tuesday") {
-		weekdayIndex = 1;
-		point++;
-	}
 	if (attendedWeekday == "wednesday") {
-		weekdayIndex = 2;
-		point += 3;
+		playerPoints[playerId] += 3;
 		wednesdayAttendenceCount[playerId] += 1;
 	}
-	if (attendedWeekday == "thursday") {
-		weekdayIndex = 3;
-		point++;
-	}
-	if (attendedWeekday == "friday") {
-		weekdayIndex = 4;
-		point++;
-	}
-	if (attendedWeekday == "saturday") {
-		weekdayIndex = 5;
-		point += 2;
+	else  if (attendedWeekday == "saturday" || attendedWeekday == "sunday") {
+		playerPoints[playerId] += 2;
 		weekendAttendenceCount[playerId] += 1;
 	}
-	if (attendedWeekday == "sunday") {
-		weekdayIndex = 6;
-		point += 2;
-		weekendAttendenceCount[playerId] += 1;
+	else {
+		playerPoints[playerId] += 1;
 	}
-
-	//사용자ID별 요일 데이터에 1씩 증가
-	attendanceRecord[playerId][weekdayIndex] += 1;
-	playerPoints[playerId] += point;
 }
 
 void processAllRecords() {
@@ -80,33 +53,33 @@ void processAllRecords() {
 		processRecord(playerName, attendedWeekday);
 	}
 
-	for (int i = 1; i <= idCount; i++) {
-		if (attendanceRecord[i][2] > 9) {
-			playerPoints[i] += 10;
+	for (int id = 1; id <= idCount; id++) {
+		if (wednesdayAttendenceCount[id] > 9) {
+			playerPoints[id] += 10;
 		}
 		
-		if (attendanceRecord[i][5] + attendanceRecord[i][6] > 9) {
-			playerPoints[i] += 10;
+		if (weekendAttendenceCount[id] > 9) {
+			playerPoints[id] += 10;
 		}
 
-		if (playerPoints[i] >= 50) {
-			playerGrades[i] = 1;
+		if (playerPoints[id] >= 50) {
+			playerGrades[id] = 1;
 		}
-		else if (playerPoints[i] >= 30) {
-			playerGrades[i] = 2;
+		else if (playerPoints[id] >= 30) {
+			playerGrades[id] = 2;
 		}
 		else {
-			playerGrades[i] = 0;
+			playerGrades[id] = 0;
 		}
 
-		cout << "NAME : " << playerNames[i] << ", ";
-		cout << "POINT : " << playerPoints[i] << ", ";
+		cout << "NAME : " << playerNames[id] << ", ";
+		cout << "POINT : " << playerPoints[id] << ", ";
 		cout << "GRADE : ";
 
-		if (playerGrades[i] == 1) {
+		if (playerGrades[id] == 1) {
 			cout << "GOLD" << "\n";
 		}
-		else if (playerGrades[i] == 2) {
+		else if (playerGrades[id] == 2) {
 			cout << "SILVER" << "\n";
 		}
 		else {
