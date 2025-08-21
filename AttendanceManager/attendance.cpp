@@ -4,6 +4,7 @@
 #include <vector>
 #include <map>
 #include <algorithm>
+#include "gmock/gmock.h"
 
 using std::string;
 using std::map;
@@ -124,6 +125,32 @@ void processAllRecords() {
 	}
 }
 
+TEST(AttendenaceTest, PointTest1) {
+	EXPECT_EQ(playerPoints[nameToId["Umar"]], 48);
+}
+
+TEST(AttendenaceTest, PointTest2) {
+	EXPECT_EQ(playerPoints[nameToId["Hannah"]], 127);
+}
+
+TEST(AttendenaceTest, PointTest3) {
+	EXPECT_EQ(playerPoints[nameToId["Bob"]], 8);
+}
+
+TEST(AttendenaceTest, GradeTestNormal) {
+	EXPECT_EQ(playerGrades[nameToId["Ian"]], 0);
+}
+
+TEST(AttendenaceTest, GradeTestSilver) {
+	EXPECT_EQ(playerGrades[nameToId["Will"]], 2);
+}
+
+TEST(AttendenaceTest, GradeTestGold) {
+	EXPECT_EQ(playerGrades[nameToId["Charlie"]], 1);
+}
+
 int main() {
 	processAllRecords();
+	::testing::InitGoogleTest();
+	return RUN_ALL_TESTS();
 }
