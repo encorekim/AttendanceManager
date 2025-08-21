@@ -8,8 +8,6 @@
 
 using std::string;
 using std::map;
-using std::string;
-using std::cout;
 using std::ifstream;
 
 map<string, int> nameToId;
@@ -72,18 +70,18 @@ void processAllRecords() {
 			playerGrades[id] = 0;
 		}
 
-		cout << "NAME : " << playerNames[id] << ", ";
-		cout << "POINT : " << playerPoints[id] << ", ";
-		cout << "GRADE : ";
+		std::cout << "NAME : " << playerNames[id] << ", ";
+		std::cout << "POINT : " << playerPoints[id] << ", ";
+		std::cout << "GRADE : ";
 
 		if (playerGrades[id] == 1) {
-			cout << "GOLD" << "\n";
+			std::cout << "GOLD" << "\n";
 		}
 		else if (playerGrades[id] == 2) {
-			cout << "SILVER" << "\n";
+			std::cout << "SILVER" << "\n";
 		}
 		else {
-			cout << "NORMAL" << "\n";
+			std::cout << "NORMAL" << "\n";
 		}
 	}
 
